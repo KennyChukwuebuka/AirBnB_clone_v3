@@ -6,30 +6,13 @@ that returns a JSON: "status": "OK"
 """
 
 from api.v1.views import app_views
-from flask import jsonify
-from models import storage
-from models.user import User
-from models.place import Place
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.review import Review
-
-classes = {"users": "User", "places": "Place", "states": "State",
-           "cities": "City", "amenities": "Amenity",
-           "reviews": "Review"}
 
 
-@app_views.route('/status', methods=['GET'], strict_slashes=False)
+@app_views.route('/status')
 def status():
-    ''' routes to status page '''
-    return jsonify({'status': 'OK'})
+    """returns a JSON: "status": "OK" """
+    return {"status": "OK"}
 
 
-@app_views.route('/stats', methods=['GET'], strict_slashes=False)
-def count():
-    '''retrieves the number of each objects by type'''
-    count_dict = {}
-    for cls in classes:
-        count_dict[cls] = storage.count(classes[cls])
-    return jsonify(count_dict)
+if __name__ == "__main__":
+    app_views.run(host="0.0.0.0", port="5000")
