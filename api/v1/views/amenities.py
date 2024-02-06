@@ -99,7 +99,7 @@ def create_amenity():
 def updates_amenity(amenity_id):
     '''Updates a Amenity object'''
     all_amenities = storage.all("Amenity").values()
-    amenity_obj = [obj.to_dict() for obj in all_amenities
+    amenity_obj = [obj for obj in all_amenities
                    if obj.id == amenity_id]
     if amenity_obj == []:
         abort(404)
@@ -109,4 +109,4 @@ def updates_amenity(amenity_id):
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(amenity_obj[0], key, value)
     storage.save()
-    return jsonify(amenity_obj[0])
+    return jsonify(amenity_obj[0].to_dict())
