@@ -100,7 +100,7 @@ def create_user():
 def updates_user(user_id):
     '''Updates a User object'''
     all_users = storage.all("User").values()
-    user_obj = [obj.to_dict() for obj in all_users if obj.id == user_id]
+    user_obj = [obj for obj in all_users if obj.id == user_id]
     if user_obj == []:
         abort(404)
     if not request.get_json():
@@ -109,4 +109,4 @@ def updates_user(user_id):
         if key not in ['id', 'email', 'created_at', 'updated_at']:
             setattr(user_obj[0], key, value)
     storage.save()
-    return jsonify(user_obj[0])
+    return jsonify(user_obj[0].to_dict())
